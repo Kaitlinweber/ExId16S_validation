@@ -10,7 +10,6 @@ def get_exid16S_results(summary_kreport):
                 exid16s_result = pd.read_csv(result, skipinitialspace=True)
                 exid16s = exid16s_result.drop(exid16s_result.columns[1], axis=1) #removes covered reads percentage column
                 df_exid16s = exid16s.rename(columns={'Sample name': 'BD_number'})
-                print(df_exid16s)
                 df_exid16s['BD_number']=df_exid16s['BD_number'].astype(str) #make string to merge data
         return df_exid16s
 
@@ -79,24 +78,39 @@ def make_graphs(error_percentage_values_exid16s, error_percentage_values_wgs, ti
         plt.savefig(str(filepath)+'/'+file_name)
 
 def get_all_output(exid16s_result, sequencing_result, WGS_result, output_dir):
+        values_output_list = []
         exid16s_genus_comparison = get_genus_comparison(exid16s_result, sequencing_result)
         exid16s_species_comparison = get_species_comparison(exid16s_result, sequencing_result)
      
         WGS_comparison_genus = get_genus_comparison(WGS_result, sequencing_result)
         WGS_comparison_species = get_species_comparison(WGS_result, sequencing_result)
+
+        exid16s_genus_count = calculate_error_percentage(exid16s_genus_comparison)
+        values_output_list.append(exid16s_genus_count)
         
+        exid16s_species_count = calculate_error_percentage(exid16s_species_comparison)
+        values_output_list.append(exid16s_species_count)
+     
+        WGS_genus_count = calculate_error_percentage(WGS_comparison_genus)
+        values_output_list.append(WGS_genus_count)
+
+        WGS_species_count = calculate_error_percentage(WGS_comparison_species)
+        values_output_list.append(WGS_species_count)
+        
+        values_output = pd.DataFrame(values_output_list, 
+        columns=['Counter_experimental','Counter_accepted','Error_percentage','Correct_percentage'])
+        values_output.insert(0, 'Comparison type', ['ExId16S genus', 'ExId16S species', 'WGS genus', 'WGS species'])
+        
+
         for filepath in output_dir:
                 exid16s_species_comparison.to_csv(str(filepath) + '/ExId16s_species_comparison.csv', index=False)
                 exid16s_genus_comparison.to_csv(str(filepath) + '/ExId16s_genus_comparison.csv', index=False)
                 WGS_comparison_genus.to_csv(str(filepath) + '/WGS_genus_comparison.csv', index=False)
                 WGS_comparison_species.to_csv(str(filepath) + '/WGS_species_comparison.csv', index=False)
+                values_output.to_csv(str(filepath)+ '/comparison_values.csv', index=False)
 
-        exid16s_genus_count = calculate_error_percentage(exid16s_genus_comparison)
-        exid16s_species_count = calculate_error_percentage(exid16s_species_comparison)
-     
-        WGS_genus_count = calculate_error_percentage(WGS_comparison_genus)
-        WGS_species_count = calculate_error_percentage(WGS_comparison_species)
-        
+
+
         make_graphs(exid16s_genus_count, WGS_genus_count, "Validation of genus identification", "genus_ident", output_dir)
         make_graphs(exid16s_species_count, WGS_species_count, "Validation of species identification", "species_ident", output_dir)
 
