@@ -31,7 +31,7 @@ def get_WGS_Juno_results(WGS_bracken_result):
                 df_wgs['BD_number'] = df_wgs['BD_number'].astype(str) # make data string to merge data       
         return df_wgs
 
-def get_genus_comparison(experimental_value, accepted_value): #wgs result hetzelfde als sequencing result qua format --> dit wordt dan format voor gold standard 
+def get_genus_comparison(experimental_value, accepted_value): 
         experimental_value = experimental_value[experimental_value['Rank'].str.contains('G')] 
         comparison_genus_df = pd.merge(experimental_value, accepted_value, on=['BD_number'], how='outer')
         comparison_genus_df = comparison_genus_df.drop(comparison_genus_df.columns[[1,4]], axis=1)
@@ -92,7 +92,7 @@ def compare_identification_tool(exid16s_result, sequencing_result, WGS_result, o
         exid16s_genus_comparison_16s = get_genus_comparison(exid16s_result, sequencing_result)
         exid16s_genus_comparison_WGS = get_genus_comparison(exid16s_result, WGS_result)
         exid16s_species_comparison_16s = get_species_comparison(exid16s_result, sequencing_result)
-        exid16s_species_comparison_WGS = get_species_comparison(exid16s_result, WGS_result) #exid rivm en exid silva in losse variablen meegeven beide vergelijken tegen sequencing result 
+        exid16s_species_comparison_WGS = get_species_comparison(exid16s_result, WGS_result) 
 
         #Create comparison files for comparison of SILVA and RIVM database on genus level 
         exid16s_genus_RIVM = get_genus_comparison(exid16s_result, sequencing_result) # hoeft niet is dubbel 
