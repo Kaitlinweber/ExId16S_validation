@@ -44,5 +44,5 @@ conda env install -f envs/vaidation_env.yaml
 ### The base command to run this script 
 
 ```
-python  -i [path/to/input/dir/ExId16S] -w [path/to/input/dir/WGS] -s [path/to/input/dir/16S_sequencing] -o [path/to/output/dir] 
+python validation.py -i [path/to/input/dir/ExId16S] -w [path/to/input/dir/WGS] -s [path/to/input/dir/16S_sequencing] -o [path/to/output/dir] 
 ```
