@@ -5,7 +5,7 @@
     <br />
 </div>
 
-## Script information
+## General information
 * **Author:** Kaitlin Weber
 * **Commissioned by:** Rijksinstituut voor Volksgezondheid en Milieu (RIVM)
 
