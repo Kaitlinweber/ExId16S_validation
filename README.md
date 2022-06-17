@@ -5,7 +5,7 @@
     <br />
 </div>
 
-## Pipeline information
+## Script information
 * **Author:** Kaitlin Weber
 * **Commissioned by:** Rijksinstituut voor Volksgezondheid en Milieu (RIVM)
 
