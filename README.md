@@ -31,7 +31,7 @@ conda env install -f envs/vaidation_env.yaml
 ### Required parameters
 
 * ```-i, --input```  Kraken summary kreport from ExId16S results, based on the custom made database.
-* ```-w, --wgs``` Kraken summary kreport obtained from Kraken2 and Bracken with WGS data.
+* ```-w, --wgs``` Kraken summary kreport obtained from Kraken2 and Bracken with Whole Genome Sequencing data.
 * ```-s, --sample_list``` Excel sheet with 16S rDNA Sanger sequencing results, with the sample number, genus name and species name in a seperate column. 
 * ```-o, --output``` Pathway to output directory, if directory does not exists, directory will be created
 
